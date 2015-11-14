@@ -1,5 +1,7 @@
 package de.uni_mannheim.informatik.wdi.usecase.books;
 
+import java.util.List;
+
 import de.uni_mannheim.informatik.wdi.Record;
 
 public class BooksPages extends Record {
@@ -18,7 +20,7 @@ public class BooksPages extends Record {
 */	
 	private String ISBN;
 	private String book_name;
-	private String author;
+	private List<Authors> author;
 	private String publisher;
 	private String pages;
 	
@@ -43,11 +45,11 @@ public class BooksPages extends Record {
 		this.book_name = bookName;
 	}
 	
-	public String getAuthor(){
+	public List<Authors> getAuthors(){
 		return this.author;
 	}
 	
-	public void setAuthor(String author){
+	public void setAuthor(List<Authors> author){
 		this.author = author;
 	}
 	
@@ -63,7 +65,7 @@ public class BooksPages extends Record {
 		return this.pages;
 	}
 	
-	public void SetPages(String pages){
+	public void setPages(String pages){
 		this.pages = pages;
 	}
 }

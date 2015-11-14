@@ -1,6 +1,9 @@
 package de.uni_mannheim.informatik.wdi.usecase.books;
 
+import java.util.List;
+
 import de.uni_mannheim.informatik.wdi.Record;
+import de.uni_mannheim.informatik.wdi.usecase.movies.Actor;
 
 public class BooksGenre extends Record {
 
@@ -19,7 +22,7 @@ public class BooksGenre extends Record {
 	
 	private String ISBN;
 	private String book_name;
-	private String author;
+	private List<Authors> author;
 	private String publisher;
 	private String genre;
 	
@@ -44,11 +47,11 @@ public class BooksGenre extends Record {
 		this.book_name = bookName;
 	}
 	
-	public String getAuthor(){
+	public List<Authors> getAuthors(){
 		return this.author;
 	}
 	
-	public void setAuthor(String author){
+	public void setAuthor(List<Authors> author){
 		this.author = author;
 	}
 	

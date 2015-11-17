@@ -40,8 +40,8 @@ public class Books_Main {
 //		rule.addComparator(new MovieDateComparator(), 0.822);				Book_Name, Authors, Publisher
 		
 		// create the matching engine
-		Blocker<Movie> blocker = new PartitioningBlocker<>(new MovieBlockingFunction());
-//		MatchingEngine<Movie> engine = new MatchingEngine<>(rule, blocker);
+		Blocker<Books> blocker = new PartitioningBlocker<>(new MovieBlockingFunction());
+		MatchingEngine<Books> engine = new MatchingEngine<>(rule, blocker);
 
 	
 		// load the data sets
@@ -67,7 +67,7 @@ public class Books_Main {
 				// load the gold standard (training set)
 				GoldStandard gsTraining = new GoldStandard();
 				gsTraining.loadFromCSVFile(new File(
-						"usecase/books/goldstandard/gs_academy_awards_2_actors.csv"));  //name of the gold standard (IMP) change the existing its for movies
+						"usecase/books/goldstandard/GS_Author_BookGenre.csv"));  //name of the gold standard (IMP) change the existing its for movies
 
 				// create the data set for learning a matching rule (use this file in RapidMiner)
 				DataSet<DefaultRecord> features = engine

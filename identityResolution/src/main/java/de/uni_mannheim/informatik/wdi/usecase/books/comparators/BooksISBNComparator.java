@@ -11,8 +11,8 @@ public class BooksISBNComparator extends Comparator<Books> {
 	public double compare(Books entity1, Books entity2) {
 
 		// Pre-processing
-		String ISBN1 = entity1.getISBN();
-		String ISBN2 = entity2.getISBN();
+		String ISBN1 = entity1.getISBN().replaceAll("[^\\d]", "");
+		String ISBN2 = entity2.getISBN().replaceAll("[^\\d]", "");
 
 		//Calculates Similarity between two ISBNs.
 		//Since ISBNs are considered universal identifiers for books,  

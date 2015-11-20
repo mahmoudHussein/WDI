@@ -11,8 +11,8 @@ public class BooksTitleLevenshteinComparator extends Comparator<Books>{
 	
 	public double compare(Books entity1, Books entity2) {
 		
-		String title1 = entity1.getBookName().replaceAll("[^\\dA-Za-z ]", " ").toLowerCase();
-		String title2 = entity2.getBookName().replaceAll("[^\\dA-Za-z ]", " ").toLowerCase();
+		String title1 = entity1.getBookName().replaceAll("([\\d\\W\\w\\D]*)", " ").toLowerCase();
+		String title2 = entity2.getBookName().replaceAll("([\\d\\W\\w\\D]*)", " ").toLowerCase();
 		
 		LevenshteinSimilarity j = new LevenshteinSimilarity();
 		

@@ -58,8 +58,7 @@ public class Books_Main {
 				
 
 				// run the matching
-				List<Correspondence<Movie>> correspondences = engine
-						.runMatching(ds1, ds2);
+				List<Correspondence<Movie>> correspondences = engine.runMatching(ds1, ds2);
 	
 				// write the correspondences to the output file
 				engine.writeCorrespondences(correspondences, new File("usecase/books/output/authors_2_Genre_Correspondences.csv"));

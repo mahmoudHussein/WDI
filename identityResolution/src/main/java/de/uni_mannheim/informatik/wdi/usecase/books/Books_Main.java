@@ -22,6 +22,8 @@ import de.uni_mannheim.informatik.wdi.identityresolution.matching.LinearCombinat
 import de.uni_mannheim.informatik.wdi.identityresolution.matching.MatchingEngine;
 import de.uni_mannheim.informatik.wdi.identityresolution.model.DefaultRecord;
 import de.uni_mannheim.informatik.wdi.identityresolution.model.DefaultRecordCSVFormatter;
+import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksTitleJaccardComparator;
+import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksTitleLevenshteinComparator;
 import de.uni_mannheim.informatik.wdi.usecase.movies.Movie;
 import de.uni_mannheim.informatik.wdi.usecase.movies.MovieBlockingFunction;
 import de.uni_mannheim.informatik.wdi.usecase.movies.comparators.MovieDateComparator;
@@ -36,11 +38,11 @@ public class Books_Main {
 		// define the matching rule	
 		LinearCombinationMatchingRule<Books> rule = new LinearCombinationMatchingRule<>(
 				-1.497, 0.5);
-//		rule.addComparator(new MovieTitleComparator(), 1.849);   			//we need to create the matching rules here for ISBN,
-//		rule.addComparator(new MovieDateComparator(), 0.822);				Book_Name, Authors, Publisher
+		rule.addComparator(new BooksTitleJaccardComparator(), 1.849);   			//we need to create the matching rules here for ISBN,
+		rule.addComparator(new BooksTitleLevenshteinComparator(), 0.822);			//	Book_Name, Authors, Publisher
 		
 		// create the matching engine
-		Blocker<Books> blocker = new PartitioningBlocker<>(new MovieBlockingFunction());
+		Blocker<Books> blocker = new PartitioningBlocker<>(new BooksBlockingFunction());
 		MatchingEngine<Books> engine = new MatchingEngine<>(rule, blocker);
 
 	

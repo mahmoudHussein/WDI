@@ -47,35 +47,35 @@ public class Books_Main {
 
 	
 		// load the data sets
-				DataSet<Authors> ds1 = new DataSet<>();
+				DataSet<Books> ds1 = new DataSet<>();
 				DataSet<Books> ds2 = new DataSet<>();
 				ds1.loadFromXML(
-						new File("usecase/books/input/AuthorTargetSchema.xml"),
-						new AuthorsFactory(), "/Authors/Author");
+						new File("usecase/books/input/GoodReadsTargetSchemaOutput.xml"),
+						new BooksFactory(), "/Books/Book");
 				ds2.loadFromXML(
-						new File("usecase/movie/input/GenreTargetSchema.xml"),
+						new File("usecase/books/input/DBPediaTargetSchemaBooks.xml"),
 						new BooksFactory(), "/Books/Book");
 				
 
 				// run the matching
-				List<Correspondence<Movie>> correspondences = engine.runMatching(ds1, ds2);
+				List<Correspondence<Books>> correspondences = engine.runMatching(ds1, ds2);
 	
 				// write the correspondences to the output file
-				engine.writeCorrespondences(correspondences, new File("usecase/books/output/authors_2_Genre_Correspondences.csv"));
+				engine.writeCorrespondences(correspondences, new File("usecase/books/output/GoodReads_2_DbpediaBooks_Correspondences.csv"));
 	
 				printCorrespondences(correspondences);
 				
 				// load the gold standard (training set)
 				GoldStandard gsTraining = new GoldStandard();
 				gsTraining.loadFromCSVFile(new File(
-						"usecase/books/goldstandard/GS_Author_BookGenre.csv"));  //name of the gold standard (IMP) change the existing its for movies
+						"usecase/books/goldstandard/GS_GoodReads_2_DbpediaBookscsv"));  //name of the gold standard (IMP) change the existing its for movies
 
 				// create the data set for learning a matching rule (use this file in RapidMiner)
 				DataSet<DefaultRecord> features = engine
 						.generateTrainingDataForLearning(ds1, ds2, gsTraining);
 				features.writeCSV(
 						new File(
-								"usecase/books/output/optimisation/authors_2_Genre_Features.csv"),
+								"usecase/books/output/optimisation/GoodReads_2_DbpediaBooks_Features.csv"),
 						new DefaultRecordCSVFormatter());
 				
 				// load the gold standard (test set)
@@ -84,7 +84,7 @@ public class Books_Main {
 						"usecase/books/goldstandard/gs_academy_awards_2_actors_test.csv")); //name of gold standard (IMP) change the existing its for movies
 
 				// evaluate the result
-				MatchingEvaluator<Movie> evaluator = new MatchingEvaluator<>(true);
+				MatchingEvaluator<Books> evaluator = new MatchingEvaluator<>(true);
 				Performance perfTest = evaluator.evaluateMatching(correspondences, gsTest);
 				
 				// print the evaluation result
@@ -95,14 +95,14 @@ public class Books_Main {
 	
 	}
 	
-	private static void printCorrespondences(List<Correspondence<Movie>> correspondences) {
+	private static void printCorrespondences(List<Correspondence<Books>> correspondences) {
 		// sort the correspondences
-		Collections.sort(correspondences, new Comparator<Correspondence<Movie>>() {
+		Collections.sort(correspondences, new Comparator<Correspondence<Books>>() {
 
 			@Override
-			public int compare(Correspondence<Movie> o1, Correspondence<Movie> o2) {
+			public int compare(Correspondence<Books> o1, Correspondence<Books> o2) {
 				int score = Double.compare(o1.getSimilarityScore(), o2.getSimilarityScore());
-				int title = o1.getFirstRecord().getTitle().compareTo(o2.getFirstRecord().getTitle());
+				int title = o1.getFirstRecord().getBookName().compareTo(o2.getFirstRecord().getBookName());
 				
 				if(score!=0) {
 					return -score;
@@ -114,18 +114,18 @@ public class Books_Main {
 		});
 		
 		// print the correspondences
-		for (Correspondence<Movie> correspondence : correspondences) {
+		for (Correspondence<Books> correspondence : correspondences) {
 			if(correspondence.getSimilarityScore()<1.0) {
 				System.out.println(String.format("%s,%s,|\t\t%.2f\t[%s] %s (%s) <--> [%s] %s (%s)",
 						correspondence.getFirstRecord().getIdentifier(),
 						correspondence.getSecondRecord().getIdentifier(),
 						correspondence.getSimilarityScore(),
 						correspondence.getFirstRecord().getIdentifier(), correspondence
-								.getFirstRecord().getTitle(), correspondence.getFirstRecord()
-								.getDate().toString("YYYY-MM-DD"), correspondence
+								.getFirstRecord().getBookName(), correspondence.getFirstRecord()
+								.getYear(), correspondence
 								.getSecondRecord().getIdentifier(), correspondence
-								.getSecondRecord().getTitle(), correspondence.getSecondRecord()
-								.getDate().toString("YYYY-MM-DD")));
+								.getSecondRecord().getBookName(), correspondence.getSecondRecord()
+								.getYear()));
 			}
 		}
 	}

@@ -60,22 +60,17 @@ public class BooksAuthorsComparator extends Comparator<Books>{
 		//compares author lists' sizes, nested loop to compute similarity between 
 		//each author in one list with each author in the other
 		if(authorNames1.size() >= authorNames2.size() && authorNames2 != null && authorNames2.size() > 0 && !authorNames2.isEmpty()){
-			int x = 0;
 			for (int i = 0; i < authorNames2.size(); i++){
 				for (int j = 0; j < authorNames1.size(); j++){
-					x++;
 					//every computed similarity stored in array list
 					authorSimilarities.add(jSim.calculate(authorNames1.get(j), authorNames2.get(i)));
 				}
 			}
 		}
 		if(authorNames2.size() >= authorNames1.size() && authorNames1 != null && authorNames1.size() > 0 && !authorNames1.isEmpty()){
-			int x = 0;
 			for (int i = 0; i < authorNames1.size(); i++){
-				for (int j = 0; j < authorNames2.size(); j++){
-					
+				for (int j = 0; j < authorNames2.size(); j++){		
 					authorSimilarities.add(jSim.calculate(authorNames2.get(j), authorNames1.get(i)));
-					x++;
 				}
 			}
 		}

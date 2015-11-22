@@ -12,8 +12,8 @@ import de.uni_mannheim.informatik.wdi.Record;
 			<Birth_Date>1908-09-19</Birth_Date>
 			<Birth_Place>Finland, Grand Duchy of Finland, Helsinki</Birth_Place>
 			<Occupation>Author, translator, academician</Occupation>
+			<Writing_Genre>Historical fiction</Writing_Genre>
 		</Author>
-		<Writing_Genre>Historical fiction</Writing_Genre>
 	</Book>
  */
 public class Authors extends Record {

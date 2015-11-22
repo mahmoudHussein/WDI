@@ -38,7 +38,8 @@ public class BooksAuthorsComparator extends Comparator<Books>{
 			//handling last name, first name order
 			if (name.contains(",")){
 				fullName1 = name.split(",");
-				authorNames1.add(fullName1[1]+" "+fullName1[0]);
+				String fullname = fullName1[1]+" "+fullName1[0];
+				authorNames1.add(fullname.trim());
 			}else{
 				authorNames1.add(name);
 			}
@@ -48,7 +49,8 @@ public class BooksAuthorsComparator extends Comparator<Books>{
 			String name = author.getAuthorName().toLowerCase();
 			if (name.contains(",")){
 				fullName2 = name.split(",");
-				authorNames2.add(fullName2[1]+" "+fullName2[0]);
+				String fullname = fullName2[1]+" "+fullName2[0];
+				authorNames2.add(fullname.trim());
 			}else{
 				authorNames2.add(name);
 			}		

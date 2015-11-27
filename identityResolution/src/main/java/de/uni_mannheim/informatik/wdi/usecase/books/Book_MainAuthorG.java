@@ -31,6 +31,7 @@ import de.uni_mannheim.informatik.wdi.identityresolution.matching.MatchingEngine
 import de.uni_mannheim.informatik.wdi.identityresolution.model.DefaultRecord;
 import de.uni_mannheim.informatik.wdi.identityresolution.model.DefaultRecordCSVFormatter;
 import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BookPublicationDateComparator;
+import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksAuthorsComparator;
 import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksISBNComparator;
 import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksPublisherJaccardComparator;
 import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksPublisherLevenshteinComparator;
@@ -49,15 +50,15 @@ public class Book_MainAuthorG {
 		
 		// define the matching rule	
 		LinearCombinationMatchingRule<Books> rule = new LinearCombinationMatchingRule<>(0.7);
-		rule.addComparator(new BooksTitleJaccardComparator(), 0.2);   			//we need to create the matching rules here for ISBN,
-		rule.addComparator(new BooksTitleLevenshteinComparator(), 0.2 );			//	Book_Name, Authors, Publisher
-		rule.addComparator(new BooksISBNComparator(), 0.5);
-		rule.addComparator(new BookPublicationDateComparator(),0.1);
-//		rule.addComparator(new BooksPublisherJaccardComparator(), 0.6);
+		rule.addComparator(new BooksAuthorsComparator(), 1);   			//we need to create the matching rules here for ISBN,
+//		rule.addComparator(new BooksTitleLevenshteinComparator(), 0.2 );			//	Book_Name, Authors, Publisher
+//		rule.addComparator(new BooksISBNComparator(), 0.5);
+//		rule.addComparator(new BookPublicationDateComparator(),0.1);
+////		rule.addComparator(new BooksPublisherJaccardComparator(), 0.6);
 //		rule.addComparator(new BooksPublisherLevenshteinComparator(), 0.7);
 		
 		// create the matching engine
-		Blocker<Books> blocker = new PartitioningBlocker<>(new BooksBlockingFunction());
+		Blocker<Books> blocker = new PartitioningBlocker<>(new AuthorsBlockingFunction());
 		MatchingEngine<Books> engine = new MatchingEngine<>(rule, blocker);
 
 		File dataset1 = new File("usecase/books/input/AuthorTargetSchemaB.xml");
@@ -87,7 +88,7 @@ public class Book_MainAuthorG {
 				// load the gold standard (training set)
 				GoldStandard gsTraining = new GoldStandard();
 				gsTraining.loadFromCSVFile(new File(
-						"usecase/books/goldstandard/GS_Author_GoodReads.csv"));  //name of the gold standard (IMP) change the existing its for movies
+						"usecase/books/goldstandard/GS_Authors_GoodReads.csv"));  //name of the gold standard (IMP) change the existing its for movies
 
 				// create the data set for learning a matching rule (use this file in RapidMiner)
 				DataSet<DefaultRecord> features = engine
@@ -100,7 +101,7 @@ public class Book_MainAuthorG {
 				// load the gold standard (test set)
 				GoldStandard gsTest = new GoldStandard();
 				gsTest.loadFromCSVFile(new File(
-						"usecase/books/goldstandard/GS_Author_2_GoodReads_test.csv")); //name of gold standard (IMP) change the existing its for movies
+						"usecase/books/goldstandard/GS_Authors_GoodReads_Test.csv")); //name of gold standard (IMP) change the existing its for movies
 
 				// evaluate the result
 				MatchingEvaluator<Books> evaluator = new MatchingEvaluator<>(true);
@@ -121,7 +122,7 @@ public class Book_MainAuthorG {
 			@Override
 			public int compare(Correspondence<Books> o1, Correspondence<Books> o2) {
 				int score = Double.compare(o1.getSimilarityScore(), o2.getSimilarityScore());
-				int title = o1.getFirstRecord().getBookName().compareTo(o2.getFirstRecord().getBookName());
+				int title = o1.getFirstRecord().getAuthors().get(0).getAuthorName().compareTo(o2.getFirstRecord().getAuthors().get(0).getAuthorName());
 				
 				if(score!=0) {
 					return -score;

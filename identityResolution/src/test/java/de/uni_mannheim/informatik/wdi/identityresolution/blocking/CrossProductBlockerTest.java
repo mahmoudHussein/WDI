@@ -16,8 +16,8 @@ import de.uni_mannheim.informatik.wdi.identityresolution.evaluation.MatchingEval
 import de.uni_mannheim.informatik.wdi.identityresolution.evaluation.Performance;
 import de.uni_mannheim.informatik.wdi.identityresolution.matching.Correspondence;
 import de.uni_mannheim.informatik.wdi.identityresolution.model.Pair;
-import de.uni_mannheim.informatik.wdi.usecase.movies.MovieFactory;
 import de.uni_mannheim.informatik.wdi.usecase.movies.Movie;
+import de.uni_mannheim.informatik.wdi.usecase.movies.MovieFactory;
 import junit.framework.TestCase;
 
 public class CrossProductBlockerTest extends TestCase {

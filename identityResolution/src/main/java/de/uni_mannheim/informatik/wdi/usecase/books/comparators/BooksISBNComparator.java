@@ -1,7 +1,7 @@
 package de.uni_mannheim.informatik.wdi.usecase.books.comparators;
 
-import de.uni_mannheim.informatik.wdi.identityresolution.similarity.EqualsSimilarity;
 import de.uni_mannheim.informatik.wdi.identityresolution.matching.Comparator;
+import de.uni_mannheim.informatik.wdi.identityresolution.similarity.EqualsSimilarity;
 import de.uni_mannheim.informatik.wdi.usecase.books.Books;
 
 public class BooksISBNComparator extends Comparator<Books> {

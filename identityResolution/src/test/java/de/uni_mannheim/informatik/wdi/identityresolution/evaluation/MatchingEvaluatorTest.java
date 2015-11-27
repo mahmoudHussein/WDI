@@ -1,12 +1,10 @@
 package de.uni_mannheim.informatik.wdi.identityresolution.evaluation;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import de.uni_mannheim.informatik.wdi.identityresolution.matching.Correspondence;
 import de.uni_mannheim.informatik.wdi.identityresolution.model.Pair;
-
-import java.util.List;
-
 import de.uni_mannheim.informatik.wdi.usecase.movies.Movie;
 import junit.framework.TestCase;
 

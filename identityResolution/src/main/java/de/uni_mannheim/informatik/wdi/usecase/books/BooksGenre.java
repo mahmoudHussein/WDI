@@ -3,7 +3,6 @@ package de.uni_mannheim.informatik.wdi.usecase.books;
 import java.util.List;
 
 import de.uni_mannheim.informatik.wdi.Record;
-import de.uni_mannheim.informatik.wdi.usecase.movies.Actor;
 
 public class BooksGenre extends Record {
 

@@ -2,7 +2,6 @@ package de.uni_mannheim.informatik.wdi.usecase.books.comparators;
 
 import de.uni_mannheim.informatik.wdi.identityresolution.matching.Comparator;
 import de.uni_mannheim.informatik.wdi.identityresolution.similarity.string.LevenshteinSimilarity;
-import de.uni_mannheim.informatik.wdi.identityresolution.similarity.string.TokenizingJaccardSimilarity;
 import de.uni_mannheim.informatik.wdi.usecase.books.Books;
 
 

@@ -1,22 +1,14 @@
 package de.uni_mannheim.informatik.wdi.usecase.books;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import de.uni_mannheim.informatik.wdi.DataSet;
@@ -31,15 +23,10 @@ import de.uni_mannheim.informatik.wdi.identityresolution.matching.MatchingEngine
 import de.uni_mannheim.informatik.wdi.identityresolution.model.DefaultRecord;
 import de.uni_mannheim.informatik.wdi.identityresolution.model.DefaultRecordCSVFormatter;
 import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BookPublicationDateComparator;
+import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksAuthorsComparator;
 import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksISBNComparator;
-import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksPublisherJaccardComparator;
-import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksPublisherLevenshteinComparator;
 import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksTitleJaccardComparator;
 import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksTitleLevenshteinComparator;
-import de.uni_mannheim.informatik.wdi.usecase.movies.Movie;
-import de.uni_mannheim.informatik.wdi.usecase.movies.MovieBlockingFunction;
-import de.uni_mannheim.informatik.wdi.usecase.movies.comparators.MovieDateComparator;
-import de.uni_mannheim.informatik.wdi.usecase.movies.comparators.MovieTitleComparator;
 
 
 public class Books_Main {
@@ -51,10 +38,9 @@ public class Books_Main {
 		LinearCombinationMatchingRule<Books> rule = new LinearCombinationMatchingRule<>(0.7);
 		rule.addComparator(new BooksTitleJaccardComparator(), 0.2);   			//we need to create the matching rules here for ISBN,
 		rule.addComparator(new BooksTitleLevenshteinComparator(), 0.2 );			//	Book_Name, Authors, Publisher
-		rule.addComparator(new BooksISBNComparator(), 0.5);
+		rule.addComparator(new BooksISBNComparator(), 0.3);
 		rule.addComparator(new BookPublicationDateComparator(),0.1);
-//		rule.addComparator(new BooksPublisherJaccardComparator(), 0.6);
-//		rule.addComparator(new BooksPublisherLevenshteinComparator(), 0.7);
+		rule.addComparator(new BooksAuthorsComparator(), 0.2);
 		
 		// create the matching engine
 		Blocker<Books> blocker = new PartitioningBlocker<>(new BooksBlockingFunction());

@@ -13,8 +13,8 @@ import org.xml.sax.SAXException;
 import de.uni_mannheim.informatik.wdi.identityresolution.model.DefaultRecord;
 import de.uni_mannheim.informatik.wdi.identityresolution.model.DefaultRecordFactory;
 import de.uni_mannheim.informatik.wdi.usecase.movies.Actor;
-import de.uni_mannheim.informatik.wdi.usecase.movies.MovieFactory;
 import de.uni_mannheim.informatik.wdi.usecase.movies.Movie;
+import de.uni_mannheim.informatik.wdi.usecase.movies.MovieFactory;
 import junit.framework.TestCase;
 
 public class DataSetTest extends TestCase {

@@ -3,7 +3,6 @@ package de.uni_mannheim.informatik.wdi.usecase.books.comparators;
 import de.uni_mannheim.informatik.wdi.identityresolution.matching.Comparator;
 import de.uni_mannheim.informatik.wdi.identityresolution.similarity.string.TokenizingJaccardSimilarity;
 import de.uni_mannheim.informatik.wdi.usecase.books.Books;
-import de.uni_mannheim.informatik.wdi.usecase.movies.Movie;
 
 public class BooksPublisherJaccardComparator extends Comparator<Books>{
 

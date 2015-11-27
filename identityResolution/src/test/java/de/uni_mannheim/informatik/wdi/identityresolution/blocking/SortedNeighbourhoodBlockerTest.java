@@ -7,16 +7,15 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
-import junit.framework.TestCase;
-
 import org.joda.time.DateTime;
 import org.xml.sax.SAXException;
 
 import de.uni_mannheim.informatik.wdi.DataSet;
 import de.uni_mannheim.informatik.wdi.identityresolution.evaluation.GoldStandard;
 import de.uni_mannheim.informatik.wdi.identityresolution.model.Pair;
-import de.uni_mannheim.informatik.wdi.usecase.movies.MovieBlockingFunction;
 import de.uni_mannheim.informatik.wdi.usecase.movies.Movie;
+import de.uni_mannheim.informatik.wdi.usecase.movies.MovieBlockingFunction;
+import junit.framework.TestCase;
 
 public class SortedNeighbourhoodBlockerTest extends TestCase {
 

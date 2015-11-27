@@ -16,12 +16,12 @@ public class BooksAuthorsComparator extends Comparator<Books>{
 		// creates author list for book one
 		List<Authors> authorList1 = entity1.getAuthors();
 		ArrayList<String> authorNames1 = new ArrayList<String>();
-		int listLength1 = authorNames1.size();
+		int listLength1 = authorList1.toArray().length;
 
 		//creates author list for book two
 		List<Authors> authorList2 = entity2.getAuthors();
 		ArrayList<String> authorNames2 = new ArrayList<String>();
-		int listLength2 = authorNames2.size();
+		int listLength2 = authorList2.size();
 
 		//array list to store similarities between authors of both books
 		ArrayList<Double> authorSimilarities = new ArrayList<Double>();

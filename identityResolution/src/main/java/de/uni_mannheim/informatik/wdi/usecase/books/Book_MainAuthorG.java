@@ -1,14 +1,22 @@
 package de.uni_mannheim.informatik.wdi.usecase.books;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import de.uni_mannheim.informatik.wdi.DataSet;
@@ -24,11 +32,17 @@ import de.uni_mannheim.informatik.wdi.identityresolution.model.DefaultRecord;
 import de.uni_mannheim.informatik.wdi.identityresolution.model.DefaultRecordCSVFormatter;
 import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BookPublicationDateComparator;
 import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksISBNComparator;
+import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksPublisherJaccardComparator;
+import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksPublisherLevenshteinComparator;
 import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksTitleJaccardComparator;
 import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksTitleLevenshteinComparator;
+import de.uni_mannheim.informatik.wdi.usecase.movies.Movie;
+import de.uni_mannheim.informatik.wdi.usecase.movies.MovieBlockingFunction;
+import de.uni_mannheim.informatik.wdi.usecase.movies.comparators.MovieDateComparator;
+import de.uni_mannheim.informatik.wdi.usecase.movies.comparators.MovieTitleComparator;
 
 
-public class Book_mainAuthor {
+public class Book_MainAuthorG {
 
 	public static void main(String[] args) throws XPathExpressionException,
 	ParserConfigurationException, SAXException, IOException {
@@ -47,7 +61,7 @@ public class Book_mainAuthor {
 		MatchingEngine<Books> engine = new MatchingEngine<>(rule, blocker);
 
 		File dataset1 = new File("usecase/books/input/AuthorTargetSchemaB.xml");
-		File dataset2 = new File("usecase/books/input/DBPediaTargetSchemaBooks.xml");
+		File dataset2 = new File("usecase/books/input/GoodReadsTargetSchema.xml");
 		
 	
 		// load the data sets
@@ -66,27 +80,27 @@ public class Book_mainAuthor {
 	
 				// write the correspondences to the output file
 
-				engine.writeCorrespondences(correspondences, new File("usecase/books/output/Author_2_DbpediaBooks_Correspondences.csv"));
+				engine.writeCorrespondences(correspondences, new File("usecase/books/output/Author_2_GoodReads_Correspondences.csv"));
 	
 				printCorrespondences(correspondences);
 				
 				// load the gold standard (training set)
 				GoldStandard gsTraining = new GoldStandard();
 				gsTraining.loadFromCSVFile(new File(
-						"usecase/books/goldstandard/GS_Author_DBpediaBook.csv"));  //name of the gold standard (IMP) change the existing its for movies
+						"usecase/books/goldstandard/GS_Author_GoodReads.csv"));  //name of the gold standard (IMP) change the existing its for movies
 
 				// create the data set for learning a matching rule (use this file in RapidMiner)
 				DataSet<DefaultRecord> features = engine
 						.generateTrainingDataForLearning(ds1, ds2, gsTraining);
 				features.writeCSV(
 						new File(
-								"usecase/books/output/optimisation/Author_2_DbpediaBooks_Features.csv"),
+								"usecase/books/output/optimisation/Author_2_GoodReads_Features.csv"),
 						new DefaultRecordCSVFormatter());
 				
 				// load the gold standard (test set)
 				GoldStandard gsTest = new GoldStandard();
 				gsTest.loadFromCSVFile(new File(
-						"usecase/books/goldstandard/GS_Author_2_DbpediaBooks_test.csv")); //name of gold standard (IMP) change the existing its for movies
+						"usecase/books/goldstandard/GS_Author_2_GoodReads_test.csv")); //name of gold standard (IMP) change the existing its for movies
 
 				// evaluate the result
 				MatchingEvaluator<Books> evaluator = new MatchingEvaluator<>(true);

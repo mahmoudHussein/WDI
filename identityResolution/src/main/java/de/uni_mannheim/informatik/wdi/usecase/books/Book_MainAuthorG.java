@@ -42,7 +42,7 @@ import de.uni_mannheim.informatik.wdi.usecase.movies.comparators.MovieDateCompar
 import de.uni_mannheim.informatik.wdi.usecase.movies.comparators.MovieTitleComparator;
 
 
-public class Book_mainAuthor {
+public class Book_MainAuthorG {
 
 	public static void main(String[] args) throws XPathExpressionException,
 	ParserConfigurationException, SAXException, IOException {
@@ -61,7 +61,7 @@ public class Book_mainAuthor {
 		MatchingEngine<Books> engine = new MatchingEngine<>(rule, blocker);
 
 		File dataset1 = new File("usecase/books/input/AuthorTargetSchemaB.xml");
-		File dataset2 = new File("usecase/books/input/DBPediaTargetSchemaBooks.xml");
+		File dataset2 = new File("usecase/books/input/GoodReadsTargetSchema.xml");
 		
 	
 		// load the data sets

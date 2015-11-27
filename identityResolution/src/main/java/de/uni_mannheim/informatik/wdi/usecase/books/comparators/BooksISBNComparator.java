@@ -18,6 +18,10 @@ public class BooksISBNComparator extends Comparator<Books> {
 		//Since ISBNs are considered universal identifiers for books,  
 		//they will matched for exact similarity
 		double similarity = sim.calculate(ISBN1, ISBN2);
+		
+		if (similarity <= 0.7){
+			similarity = 0.0;
+		}
 
 		return similarity;
 	}

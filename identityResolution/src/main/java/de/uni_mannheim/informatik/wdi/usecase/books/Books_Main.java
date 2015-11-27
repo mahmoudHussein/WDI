@@ -1,14 +1,22 @@
 package de.uni_mannheim.informatik.wdi.usecase.books;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import de.uni_mannheim.informatik.wdi.DataSet;
@@ -22,6 +30,10 @@ import de.uni_mannheim.informatik.wdi.identityresolution.matching.LinearCombinat
 import de.uni_mannheim.informatik.wdi.identityresolution.matching.MatchingEngine;
 import de.uni_mannheim.informatik.wdi.identityresolution.model.DefaultRecord;
 import de.uni_mannheim.informatik.wdi.identityresolution.model.DefaultRecordCSVFormatter;
+import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BookPublicationDateComparator;
+import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksISBNComparator;
+import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksPublisherJaccardComparator;
+import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksPublisherLevenshteinComparator;
 import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksTitleJaccardComparator;
 import de.uni_mannheim.informatik.wdi.usecase.books.comparators.BooksTitleLevenshteinComparator;
 import de.uni_mannheim.informatik.wdi.usecase.movies.Movie;
@@ -36,24 +48,30 @@ public class Books_Main {
 	ParserConfigurationException, SAXException, IOException {
 		
 		// define the matching rule	
-		LinearCombinationMatchingRule<Books> rule = new LinearCombinationMatchingRule<>(
-				-1.497, 0.5);
-		rule.addComparator(new BooksTitleJaccardComparator(), 1.849);   			//we need to create the matching rules here for ISBN,
-		rule.addComparator(new BooksTitleLevenshteinComparator(), 0.822);			//	Book_Name, Authors, Publisher
+		LinearCombinationMatchingRule<Books> rule = new LinearCombinationMatchingRule<>(0.7);
+		rule.addComparator(new BooksTitleJaccardComparator(), 0.2);   			//we need to create the matching rules here for ISBN,
+		rule.addComparator(new BooksTitleLevenshteinComparator(), 0.2 );			//	Book_Name, Authors, Publisher
+		rule.addComparator(new BooksISBNComparator(), 0.5);
+		rule.addComparator(new BookPublicationDateComparator(),0.1);
+//		rule.addComparator(new BooksPublisherJaccardComparator(), 0.6);
+//		rule.addComparator(new BooksPublisherLevenshteinComparator(), 0.7);
 		
 		// create the matching engine
 		Blocker<Books> blocker = new PartitioningBlocker<>(new BooksBlockingFunction());
 		MatchingEngine<Books> engine = new MatchingEngine<>(rule, blocker);
 
+		File dataset1 = new File("usecase/books/input/GoodReadsTargetSchema.xml");
+		File dataset2 = new File("usecase/books/input/DBPediaTargetSchemaBooks.xml");
+		
 	
 		// load the data sets
 				DataSet<Books> ds1 = new DataSet<>();
 				DataSet<Books> ds2 = new DataSet<>();
 				ds1.loadFromXML(
-						new File("usecase/books/input/GoodReadsTargetSchemaOutput.xml"),
+						dataset1,
 						new BooksFactory(), "/Books/Book");
 				ds2.loadFromXML(
-						new File("usecase/books/input/DBPediaTargetSchemaBooks.xml"),
+						dataset2,
 						new BooksFactory(), "/Books/Book");
 				
 
@@ -61,6 +79,7 @@ public class Books_Main {
 				List<Correspondence<Books>> correspondences = engine.runMatching(ds1, ds2);
 	
 				// write the correspondences to the output file
+
 				engine.writeCorrespondences(correspondences, new File("usecase/books/output/GoodReads_2_DbpediaBooks_Correspondences.csv"));
 	
 				printCorrespondences(correspondences);
@@ -68,7 +87,7 @@ public class Books_Main {
 				// load the gold standard (training set)
 				GoldStandard gsTraining = new GoldStandard();
 				gsTraining.loadFromCSVFile(new File(
-						"usecase/books/goldstandard/GS_GoodReads_2_DbpediaBookscsv"));  //name of the gold standard (IMP) change the existing its for movies
+						"usecase/books/goldstandard/GS_GoodReads_DBpedia.csv"));  //name of the gold standard (IMP) change the existing its for movies
 
 				// create the data set for learning a matching rule (use this file in RapidMiner)
 				DataSet<DefaultRecord> features = engine
@@ -81,7 +100,7 @@ public class Books_Main {
 				// load the gold standard (test set)
 				GoldStandard gsTest = new GoldStandard();
 				gsTest.loadFromCSVFile(new File(
-						"usecase/books/goldstandard/gs_academy_awards_2_actors_test.csv")); //name of gold standard (IMP) change the existing its for movies
+						"usecase/books/goldstandard/GS_GoodRead_2_DbpediaBooks_test.csv")); //name of gold standard (IMP) change the existing its for movies
 
 				// evaluate the result
 				MatchingEvaluator<Books> evaluator = new MatchingEvaluator<>(true);
@@ -129,6 +148,7 @@ public class Books_Main {
 			}
 		}
 	}
+	
 	
 	
 }

@@ -1,9 +1,10 @@
 package de.uni_mannheim.informatik.wdi.usecase.books.comparators;
 
+import de.uni_mannheim.informatik.wdi.identityresolution.matching.Comparator;
 import de.uni_mannheim.informatik.wdi.identityresolution.similarity.list.OverlapSimilarity;
 import de.uni_mannheim.informatik.wdi.usecase.books.Books;
 
-public class BookPublicationDateComparator {
+public class BookPublicationDateComparator extends Comparator<Books> {
 
 	public double compare(Books book1, Books book2){
 		

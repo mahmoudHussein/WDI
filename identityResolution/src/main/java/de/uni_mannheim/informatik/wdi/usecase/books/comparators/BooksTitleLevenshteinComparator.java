@@ -16,7 +16,12 @@ public class BooksTitleLevenshteinComparator extends Comparator<Books>{
 		
 		LevenshteinSimilarity j = new LevenshteinSimilarity();
 		
-		return j.calculate(title1, title2);
+		double similarity = j.calculate(title1, title2);
+		
+		if (similarity <= 0.7){
+			similarity = 0.0;
+		}
+		return similarity;
 	}
 
 	

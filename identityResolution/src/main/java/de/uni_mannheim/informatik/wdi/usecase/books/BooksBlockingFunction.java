@@ -6,6 +6,9 @@ import de.uni_mannheim.informatik.wdi.identityresolution.blocking.BlockingFuncti
 public class BooksBlockingFunction extends BlockingFunction<Books>{
 
 	public String getBlockingKey(Books instance) {
-		return instance.getBookName().subSequence(0, 3)+"";
+		if(instance.getBookName() != null){
+		return instance.getBookName().subSequence(0, 2)+"";
+		}
+		return null;
 	}
 }

@@ -80,27 +80,27 @@ public class Book_MainAuthorG {
 	
 				// write the correspondences to the output file
 
-				engine.writeCorrespondences(correspondences, new File("usecase/books/output/Author_2_DbpediaBooks_Correspondences.csv"));
+				engine.writeCorrespondences(correspondences, new File("usecase/books/output/Author_2_GoodReads_Correspondences.csv"));
 	
 				printCorrespondences(correspondences);
 				
 				// load the gold standard (training set)
 				GoldStandard gsTraining = new GoldStandard();
 				gsTraining.loadFromCSVFile(new File(
-						"usecase/books/goldstandard/GS_Author_DBpediaBook.csv"));  //name of the gold standard (IMP) change the existing its for movies
+						"usecase/books/goldstandard/GS_Author_GoodReads.csv"));  //name of the gold standard (IMP) change the existing its for movies
 
 				// create the data set for learning a matching rule (use this file in RapidMiner)
 				DataSet<DefaultRecord> features = engine
 						.generateTrainingDataForLearning(ds1, ds2, gsTraining);
 				features.writeCSV(
 						new File(
-								"usecase/books/output/optimisation/Author_2_DbpediaBooks_Features.csv"),
+								"usecase/books/output/optimisation/Author_2_GoodReads_Features.csv"),
 						new DefaultRecordCSVFormatter());
 				
 				// load the gold standard (test set)
 				GoldStandard gsTest = new GoldStandard();
 				gsTest.loadFromCSVFile(new File(
-						"usecase/books/goldstandard/GS_Author_2_DbpediaBooks_test.csv")); //name of gold standard (IMP) change the existing its for movies
+						"usecase/books/goldstandard/GS_Author_2_GoodReads_test.csv")); //name of gold standard (IMP) change the existing its for movies
 
 				// evaluate the result
 				MatchingEvaluator<Books> evaluator = new MatchingEvaluator<>(true);

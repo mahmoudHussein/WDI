@@ -10,14 +10,16 @@ public class BooksPublisherJaccardComparator extends Comparator<Books>{
 	TokenizingJaccardSimilarity sim = new TokenizingJaccardSimilarity();
 
 	public double compare(Books entity1, Books entity2) {
-		
+		double similarity = 0.0;
+		if ((entity1.getPublisher()!=null) || (entity2.getPublisher()!= null)){
+		if(!entity1.getPublisher().equals("") ||!entity2.getPublisher().equals("") ){
 		String pub1 = entity1.getPublisher().replaceAll("\\s*\\([^\\)]*\\)\\s*", " ").toLowerCase();
 		String pub2 = entity2.getPublisher().replaceAll("\\s*\\([^\\)]*\\)\\s*", " ").toLowerCase();
 		
 		
 		// calculate similarity
-		double similarity = sim.calculate(pub1, pub2);
-		
+		similarity = sim.calculate(pub1, pub2);
+		}}
 		// postprocessing
 		if(similarity<=0.3) {
 			similarity = 0;

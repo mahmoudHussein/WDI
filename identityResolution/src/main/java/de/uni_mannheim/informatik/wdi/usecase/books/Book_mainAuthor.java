@@ -42,7 +42,7 @@ import de.uni_mannheim.informatik.wdi.usecase.movies.comparators.MovieDateCompar
 import de.uni_mannheim.informatik.wdi.usecase.movies.comparators.MovieTitleComparator;
 
 
-public class Books_Main {
+public class Book_mainAuthor {
 
 	public static void main(String[] args) throws XPathExpressionException,
 	ParserConfigurationException, SAXException, IOException {
@@ -60,7 +60,7 @@ public class Books_Main {
 		Blocker<Books> blocker = new PartitioningBlocker<>(new BooksBlockingFunction());
 		MatchingEngine<Books> engine = new MatchingEngine<>(rule, blocker);
 
-		File dataset1 = new File("usecase/books/input/GoodReadsTargetSchema.xml");
+		File dataset1 = new File("usecase/books/input/AuthorTargetSchemaB.xml");
 		File dataset2 = new File("usecase/books/input/DBPediaTargetSchemaBooks.xml");
 		
 	
@@ -80,14 +80,14 @@ public class Books_Main {
 	
 				// write the correspondences to the output file
 
-				engine.writeCorrespondences(correspondences, new File("usecase/books/output/GoodReads_2_DbpediaBooks_Correspondences.csv"));
+				engine.writeCorrespondences(correspondences, new File("usecase/books/output/Author_2_DbpediaBooks_Correspondences.csv"));
 	
 				printCorrespondences(correspondences);
 				
 				// load the gold standard (training set)
 				GoldStandard gsTraining = new GoldStandard();
 				gsTraining.loadFromCSVFile(new File(
-						"usecase/books/goldstandard/GS_GoodReads_DBpedia.csv"));  //name of the gold standard (IMP) change the existing its for movies
+						"usecase/books/goldstandard/GS_Author_DBpediaBook.csv"));  //name of the gold standard (IMP) change the existing its for movies
 
 				// create the data set for learning a matching rule (use this file in RapidMiner)
 				DataSet<DefaultRecord> features = engine

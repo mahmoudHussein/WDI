@@ -43,10 +43,10 @@ public class Books_MainF {
 		rule.addComparator(new BooksAuthorsComparator(), 0.2);
 		
 		// create the matching engine
-		Blocker<Books> blocker = new PartitioningBlocker<>(new BooksBlockingFunction());
+		Blocker<Books> blocker = new PartitioningBlocker<>(new BooksBlockingFunctionAuthor());
 		MatchingEngine<Books> engine = new MatchingEngine<>(rule, blocker);
 
-		File dataset1 = new File("usecase/books/input/FreiburgTargetSchemaBooks.xml");
+		File dataset1 = new File("usecase/books/input/FreiburgTargetSchemaOutput.xml");
 			
 		File dataset2 = new File("usecase/books/input/GoodReadsTargetSchema.xml"); 
 		

@@ -37,7 +37,7 @@ public class Books extends Record{
 	private String pages;
 	private String pubCountry;
 	private String pubYear;
-	private String rating;
+	private double rating;
 	
 	public Books(String identifier, String provenance) {
 		super(identifier, provenance);
@@ -108,11 +108,11 @@ public class Books extends Record{
 		this.pubYear = year;
 	}
 	
-	public String getRating(){
+	public double getRating(){
 		return this.rating;
 	}
 	
-	public void setRating(String rating){
+	public void setRating(double rating){
 		this.rating = rating;
 	}
 	
